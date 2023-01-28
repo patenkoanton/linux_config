@@ -1,0 +1,13 @@
+[core]
+	editor = ~/.git_commit_run_vim.sh
+[user]
+	email = patenko.anton15@gmail.com
+	name = Anton Patenko
+[push]
+	default = simple
+[credential "https://github.com"]
+	helper = !/usr/bin/gh auth git-credential
+[merge]
+    tool = meld
+[diff]
+    tool = meld

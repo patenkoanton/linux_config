@@ -1,0 +1,214 @@
+let mapleader=" "
+set nocompatible              " be iMproved, required
+set noswapfile
+set tabstop=4
+set t_Co=256
+set number
+set nowrap
+set hlsearch
+set mouse=c
+set backspace=2 " make backspace work like most other apps
+set ic is vb sm cul cindent nowrap
+set scr=3
+set cst
+
+" Text formating
+" dont expand tabs in makefiles
+let _curfile = expand("%:t")
+if _curfile =~ "Makefile" || _curfile =~ "makefile" || _curfile =~ ".*\.mk"
+set noexpandtab
+else
+set expandtab
+set shiftwidth=4
+set textwidth=150 " to 79 characters
+"    set colorcolumn=80 " and warn me if my line gets over 85 characters
+set formatoptions=cqt " see :help fo-table
+set infercase " case inferred by default
+set shiftround " round the indent to shiftwidth (when at 3 spaces, and I hit > go to 4, not 5)
+set softtabstop=4 " when hitting tab or backspace, how many spaces should a tab be (see expandtab)
+set tabstop=4 " real tabs should be 4, and they will show with set list on
+set smarttab
+set autoindent
+endif
+
+set guioptions-=e
+
+set listchars=tab:··
+set list
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" Muplitple pasting after copy
+xnoremap p pgvy
+
+
+set cursorcolumn
+set cursorline
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$' " Highlight VCS conflict markers"
+""""""
+" Graphic and colors
+set t_Co=256
+set incsearch " incremental search aka search as you type
+set hlsearch " highlight search matches
+set ignorecase " ignore case
+set smartcase " but when the query starts with upper character be case sensitive
+
+set laststatus=2 " always show the status line
+set lazyredraw " do not redraw while running macros
+set linespace=0 " don't insert any extra pixel lines between rows
+set list " show traling listchars
+set listchars=tab:?\ ,trail:¬,extends:?,precedes:?,nbsp:~
+set nostartofline " don't move the cursor to first non-blank character after some commands (:25 e.g.)
+set novisualbell " don't blink
+set report=0 " tell us when anything is changed
+set ruler " Always show current positions along the bottom
+set shortmess=atToOI " shortens messages to avoid 'press a key' prompt
+set showcmd " show the command being typed
+set showmode " show current mode
+set showmatch " show matching brackets
+set scrolloff=5 " Keep 10 lines (top/bottom) for scope
+set sidescrolloff=10 " Keep 5 lines at the size
+set showbreak=? " indicate wrapped line
+set cursorline " visually mark current line
+set cursorcolumn " visually mark current column
+set ignorecase
+"""""""
+
+" some useful mappings
+map <Leader>e :tabe ~/myvimrc <Cr>
+map <Leader>o :source ~/myvimrc <Cr>
+map , gT
+map . gt
+map <Leader>h :split<Cr>
+map <Leader>v :vsplit <Cr>
+map <Leader><Left> <C-w><Left>
+map <Leader><Down> <C-w><Down>
+map <Leader><Right> <C-w><Right>
+map <Leader><Up> <C-w><Down>
+map <Leader>= <C-w>=
+map <Leader>t :tabe<Cr>
+map <Leader>q :q<Cr>
+map ; :
+map - *
+" jump to the end of the func
+" cscope navigation
+map ]] g]
+map [[ <C-o>
+
+	
+fun! ShowFuncName()
+  let lnum = line(".")
+  let col = col(".")
+  echohl ModeMsg
+  echo getline(search("^[^ \t#/]\\{2}.*[^:]\s*$", 'bW'))
+  echohl None
+  call search("\\%" . lnum . "l" . "\\%" . col . "c")
+endfun
+
+map <leader>f :call ShowFuncName() <CR>
+
+" clean whitespaces and fix codestyle
+fun! CleanAllShit()
+  %s/ \+$//g
+  %s/( /(/g
+  %s/ )/)/g
+  %s/\[ /\[/g
+  %s/ \]/\]/g
+  %s/if(/if (/g
+  %s/for(/for (/g
+  %s/while(/while (/g
+  %s/\t/    /g
+endfun
+
+map <leader>c :call CleanAllShit() <CR>
+" --------------------------------------------------
+" VUNDLE PLUGINS
+set nocompatible              " be iMproved, required
+filetype off                  " required
+syntax on                     "necessary for some color plugins
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'morhetz/gruvbox'
+Plugin 'scrooloose/nerdtree'
+Plugin 'itchyny/lightline.vim'
+
+PluginInstall
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+function! ToggleMouse()
+    " check if mouse is enabled
+    if &mouse == 'a'
+        " disable mouse
+        set mouse=
+    else
+        " enable mouse everywhere
+        set mouse=a
+    endif
+endfunc
+
+" Some useful keymappings
+map , gT
+map . gt
+map ; :
+map <leader>o :source ~/myvimrc <Cr>
+map <leader>e :tabe ~/myvimrc <Cr>
+map <leader>t :tabe <Cr>
+map <leader>[ :tabm -1<Cr>
+map <leader>] :tabm +1<Cr>
+map <leader>v :vsplit <Cr> <C-w><C-w>
+map <leader>h :split <Cr>
+map <leader><left> <C-w><left>
+map <leader><right> <C-w><right>
+map <leader><up> <C-w><up>
+map <leader><down> <C-w><down>
+map <leader>, :vertical resize +50<Cr>
+map <leader>. :vertical resize +50<Cr>
+map <leader>= <C-w>=
+map <leader>n :NERDTreeToggle<CR>
+map <leader>p :call LocalCscopeGenerate()<Cr>
+map <leader>1 1gt
+map <leader>2 2gt
+map <leader>3 3gt
+map <leader>4 4gt
+map <leader>5 5gt
+map <leadqer>6 6gt
+map <leader>7 7gt
+map <leader>8 8gt
+map <leader>9 9gt
+map <leader>0 10gt
+map m :call ToggleMouse()<Cr>
+set pastetoggle=<F4>
+nmap <F2> :set number!<CR>
+set background=dark
+colo gruvbox
+"colo tmux-gruvbox
+
+" add kernel sources cscope database
+cs add /usr/src/linux-source-3.13.0/cscope.out
+
+" generate local cscope DB just in case
+" name it "vimtempcscope.out"
+fun! LocalCscopeGenerate()
+    cs reset
+    silent exec "!cscope -Rb -fvimtempcscope.out"
+    cs add vimtempcscope.out
+    silent exec "!rm -f vimtempcscope.out"
+    redraw!
+endfun
+
+q
