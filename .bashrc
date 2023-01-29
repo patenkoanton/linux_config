@@ -10,7 +10,6 @@ alias gre="grep --ignore-case --color=auto -n"
 alias grer="gre -r"
 alias vd="vimdiff"
 alias c="cat"
-alias hs="history"
 alias fin="find . -iname"
 alias netman_restart="service network-manager restart"
 alias fsize="du -hs"
@@ -28,7 +27,7 @@ export uni="/home/banana/documents/university/"
 unset GIT_EDITOR
 alias gst="git status --ignored"
 alias gcom="git commit"
-alias gamend="git commit --amend"
+alias gfixup="git commit --amend --no-edit"
 alias gadd="git add"
 alias gsta="git stash"
 alias gbra="git branch"
@@ -60,9 +59,14 @@ HISTCONTROL=ignoreboth
 # append to the history file, don't overwrite it
 shopt -s histappend
 
+# update history file immediately after every command
+# instead of waiting until the terminal is closed
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=200000000000000
+HISTFILESIZE=200000000000000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
