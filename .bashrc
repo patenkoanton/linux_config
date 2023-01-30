@@ -27,12 +27,14 @@ export uni="/home/banana/documents/university/"
 unset GIT_EDITOR
 alias gst="git status --ignored"
 alias gcom="git commit"
-alias gfixup="git commit --amend --no-edit"
+alias gcoma="git commit --amend"
+alias gfix="git commit --amend --no-edit"
 alias gadd="git add"
 alias gsta="git stash"
 alias gbra="git branch"
 alias gche="git checkout"
 alias glog="git log"
+alias glo="git log"
 alias glogo="git log --oneline"
 alias grem="git remote -v"
 alias gsho="git show --stat"
@@ -40,7 +42,6 @@ alias gd="git difftool"
 alias gds="git difftool --staged"
 alias gd2="gd HEAD~ HEAD"
 alias gdv="git difftool --tool=vimdiff"
-alias gsho="git show"
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)

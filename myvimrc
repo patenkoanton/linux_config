@@ -95,6 +95,7 @@ map - *
 " cscope navigation
 map ]] g]
 map [[ <C-o>
+map q :q<Cr>
 
 	
 fun! ShowFuncName()
