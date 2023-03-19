@@ -14,7 +14,7 @@ alias fin="find . -iname"
 alias netman_restart="service network-manager restart"
 alias fsize="du -hs"
 alias disk_usage="df -ah"
-alias hist="history"
+alias hs="history"
 
 # So that tmux doesn't break vim colorscheme
 export TERM=screen-256color
@@ -29,6 +29,7 @@ alias gst="git status --ignored"
 alias gcom="git commit"
 alias gcoma="git commit --amend"
 alias gfix="git commit --amend --no-edit"
+alias gpush="git push"
 alias gadd="git add"
 alias gsta="git stash"
 alias gbra="git branch"
